@@ -1,0 +1,5 @@
+class Magid < ActiveRecord::Base
+	has_many :shiurs
+	validates_presence_of :name
+	validates_presence_of :shiur_id
+end

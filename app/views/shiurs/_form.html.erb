@@ -1,0 +1,46 @@
+<%= form_for(@shiur) do |f| %>
+  <% if @shiur.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@shiur.errors.count, "error") %> prohibited this shiur from being saved:</h2>
+
+      <ul>
+      <% @shiur.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :magid_id %><br>
+    <%= f.collection_select :magid_id,Magid.all, :id, :name,{:prompt=>true} %>
+	 <%= f.text_field :new_magid_name %>
+  </div>
+  <div class="field">
+    <%= f.label :category_id %><br>
+    <%= f.collection_select :category_id,Category.all, :id, :name,{:include_blank=>'Add new'} %>
+  </div>
+  <div class="field">
+    <%= f.label :subcat_id %><br>
+    <%= f.collection_select :subcat_id,Subcat.all, :id, :name,{:include_blank=>'Add new'} %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :location_link %><br>
+    <%= f.text_field :location_link %>
+  </div>
+  <div class="field">
+    <%= f.label :shiur_date %><br>
+    <%= f.date_select :shiur_date %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

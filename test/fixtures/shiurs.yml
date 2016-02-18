@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  magid_id: 1
+  category_id: 1
+  subcat_id: 1
+  name: MyString
+  description: MyString
+  location_link: MyString
+  shiur_date: 2016-02-18
+
+two:
+  magid_id: 1
+  category_id: 1
+  subcat_id: 1
+  name: MyString
+  description: MyString
+  location_link: MyString
+  shiur_date: 2016-02-18

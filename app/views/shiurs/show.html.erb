@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Magid:</strong>
+  <%= @shiur.magid_id %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @shiur.category_id %>
+</p>
+
+<p>
+  <strong>Subcat:</strong>
+  <%= @shiur.subcat_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @shiur.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @shiur.description %>
+</p>
+
+<p>
+  <strong>Location link:</strong>
+  <%= @shiur.location_link %>
+</p>
+
+<p>
+  <strong>Shiur date:</strong>
+  <%= @shiur.shiur_date %>
+</p>
+
+<%= link_to 'Edit', edit_shiur_path(@shiur) %> |
+<%= link_to 'Back', shiurs_path %>
