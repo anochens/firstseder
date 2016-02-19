@@ -30,6 +30,17 @@ class ShiursController < ApplicationController
 	    @m = Magid.create!(name: params['shiur']['new_magid_name']);
 	    @shiur.magid = @m
 	 end
+
+	 if(params['shiur']['category_id'] == '') 
+	    @c = Category.create!(name: params['shiur']['new_category_name']);
+	    @shiur.category = @c
+	 end  
+
+	 if(params['shiur']['subcat_id'] == '') 
+	    @c = Subcat.create!(name: params['shiur']['new_subcat_name']);
+	    @shiur.subcat = @c
+	 end  
+
 	 @shiur.save!
 
 

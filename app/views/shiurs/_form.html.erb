@@ -13,16 +13,18 @@
 
   <div class="field">
     <%= f.label :magid_id %><br>
-    <%= f.collection_select :magid_id,Magid.all, :id, :name,{:prompt=>true} %>
+    <%= f.collection_select :magid_id,Magid.all, :id, :name,{:include_blank=>'Add new'} %>
 	 <%= f.text_field :new_magid_name %>
   </div>
   <div class="field">
     <%= f.label :category_id %><br>
     <%= f.collection_select :category_id,Category.all, :id, :name,{:include_blank=>'Add new'} %>
+	 <%= f.text_field :new_category_name %>
   </div>
   <div class="field">
     <%= f.label :subcat_id %><br>
     <%= f.collection_select :subcat_id,Subcat.all, :id, :name,{:include_blank=>'Add new'} %>
+	 <%= f.text_field :new_subcat_name %>
   </div>
   <div class="field">
     <%= f.label :name %><br>
