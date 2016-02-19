@@ -2,17 +2,17 @@
 
 <p>
   <strong>Magid:</strong>
-  <%= @shiur.magid_id %>
+  <%= @shiur.magid.name || 'No magid name' %>
 </p>
 
 <p>
   <strong>Category:</strong>
-  <%= @shiur.category_id %>
+  <%= @shiur.category.name || 'No category name' %>
 </p>
 
 <p>
   <strong>Subcat:</strong>
-  <%= @shiur.subcat_id %>
+  <%= @shiur.subcat.name || 'No subcat name' %>
 </p>
 
 <p>

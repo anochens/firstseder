@@ -24,17 +24,14 @@ class ShiursController < ApplicationController
   # POST /shiurs
   # POST /shiurs.json
   def create
-
-	  
-	 
+		@shiur = Shiur.new(shiur_params)
 
 	 if(params['shiur']['magid_id'] == '') 
-		 m = Magid.new({:id=>0,:name=>params['shiur']['new_magid_name']});
-		 abort(m.inspect);
-		 shiur_params['magid_id'] = m.id
+		 @m = Magid.create!(name: params['shiur']['new_magid_name']);
+		 @shiur.magid = @m
 	 end
+	 @shiur.save!
 
-    @shiur = Shiur.new(shiur_params)
 
     respond_to do |format|
       if @shiur.save
