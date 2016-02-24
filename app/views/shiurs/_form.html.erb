@@ -22,8 +22,8 @@
 	 <%= f.text_field :new_category_name %>
   </div>
   <div class="field">
-    <%= f.label :subcat_id %><br>
-    <%= f.collection_select :subcat_id,Subcat.all, :id, :name,{:include_blank=>'Add new'} %>
+    <%= f.label :subcategory_id %><br>
+    <%= f.collection_select :subcat_id,Subcategory.all, :id, :name,{:include_blank=>'Add new'} %>
 	 <%= f.text_field :new_subcat_name %>
   </div>
   <div class="field">

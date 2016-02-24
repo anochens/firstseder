@@ -17,16 +17,15 @@
   <tbody>
     <% @shiurs.each do |shiur| %>
       <tr>
-        <td><%= shiur && shiur.magid ? shiur.magid.name : 'No name chosen' %></td>
-        <td><%= shiur.category.name %></td>
-        <td><%= shiur.subcat.name %></td>
+        <td><%= get_name shiur.magid %></td>
+        <td><%= get_name shiur.category %></td>
+        <td><%= get_name shiur.subcategory %></td>
         <td><%= shiur.name %></td>
         <td><%= shiur.description %></td>
         <td><%= shiur.location_link %></td>
         <td><%= shiur.shiur_date %></td>
-        <td><%= link_to 'Show', shiur %></td>
         <td><%= link_to 'Edit', edit_shiur_path(shiur) %></td>
-        <td><%= link_to 'Destroy', shiur, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', shiur, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

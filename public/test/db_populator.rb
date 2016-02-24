@@ -43,13 +43,16 @@ def process(file_name)
 	if(n>2)  
 		nmagid = chunks[-2].strip
 	end
-		
-	magid = nmagid #store even bad ones now, will remove them later
-	mymagid = Magid.where(:name => magid).first_or_create()
-	magid_id = mymagid.id
 
+
+	bad_magids = ['Amud, Aumd','Pasuk','Perek','Sif','Siman','Mishnah']
+	magid = nmagid  unless bad_magids.include? nmagid 
+
+   magid = 'none' if magid.nil? || !magid
+
+
+	mymagid = Magid.where(:name => magid).first_or_create!
 #		puts mymagid.inspect
-#		puts magid_id.inspect
 #		abort
 
    if(category.start_with?('Maseches'))
@@ -65,20 +68,15 @@ def process(file_name)
 	title.strip!
 
 #-------------------
-	mycategory = Category.where(:name => category).first_or_create()
-	category_id = mycategory.id
-
+	mycategory = Category.where(:name => category).first_or_create!
 #	puts mycategory.inspect
-#	puts category_id.inspect
 #	abort() 
 #-------------------
-	mysubcat = Subcat.where(:name => subcat).first_or_create()
-	mysubcat.category_id = category_id
-	subcat_id = mysubcat.id
+	mysubcat = Subcategory.where(:name => subcat).first_or_create!
+	mysubcat.category_id = mycategory.id
 
-	puts mysubcat.inspect
-	puts subcat_id.inspect
-	abort() 
+#	puts mysubcat.inspect
+#	abort() 
 #-------------------
          
 	location = file_name
@@ -102,10 +100,10 @@ def process(file_name)
 	loc_link = sname+location
 	desc = ''
 
-	myshiur = Shiur.where(:name => title).first_or_create()
-	myshiur.magid_id = magid_id
-	myshiur.category_id = category_id
-	myshiur.subcat_id = subcat_id
+	myshiur = Shiur.where(:name => title).first_or_create!
+	myshiur.magid = mymagid
+	myshiur.category = mycategory
+	myshiur.subcategory = mysubcat
 	myshiur.location_link = loc_link
 	myshiur.description = '' # gets set to fs late'' # gets set to fs laterr
 	begin
@@ -118,6 +116,8 @@ def process(file_name)
 	end
 
 #just for testing
+	myshiur.save!
+	myshiur.reload
 	puts myshiur.inspect
 	n+=1
 
@@ -125,13 +125,6 @@ def process(file_name)
 # end just for testing
 
 	myshiur
-
-    
-   #dont need to output this since using activerecord to create
-#using the objects!
-#	out = [id, magid_id, cat_id, subcat_id, title, desc, loc_link, date,0,0]
-#	out = out.map{|m| "\"#{m}\""}
-#	out
 end	
 
 $shiurs = []
@@ -151,7 +144,7 @@ def scan(ftp, dir)
 			fs =  entry.split
 			new_entry = fs[8,fs.length-1].join(' ')
 			full_name = ftp.pwd + "/" + new_entry
-			p = process(full_name)
+			p = process(full_name) if new_entry != '_RawFiles'
 			p.description = 'xxxxx'#new_entry
 		end
 	end

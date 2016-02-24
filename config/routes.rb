@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :shiurs
+  resources :subcategories
 
-  resources :subcats
+  resources :shiurs
 
   resources :categories
 
