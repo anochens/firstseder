@@ -45,23 +45,26 @@ def process(file_name)
 	end
 
 
-	bad_magids = ['Amud, Aumd','Pasuk','Perek','Sif','Siman','Mishnah']
-	magid = nmagid  unless bad_magids.include? nmagid 
+	bad_magids = ['amud','aumd','pasuk','perek','sif','siman','mishnah']
+	magid = nmagid  unless bad_magids.include? nmagid.downcase 
 
    magid = 'none' if magid.nil? || !magid
 
 
-	mymagid = Magid.where(:name => magid).first_or_create!
 #		puts mymagid.inspect
 #		abort
 
    if(category.start_with?('Maseches'))
 		subcat = category.strip 
 		category = 'Gemara'
+   elsif(category.start_with?('Medrash'))
+		subcat = magid.strip 
+		magid = 'none'
 	elsif(chunks.length > 1 && chunks[0].strip != category.strip) 
 		subcat = chunks[0].strip
 	end
 
+	mymagid = Magid.where(:name => magid).first_or_create!
 	subcat.strip!
 	category.strip!
 	subcat.strip!
@@ -100,7 +103,8 @@ def process(file_name)
 	loc_link = sname+location
 	desc = ''
 
-	myshiur = Shiur.where(:name => title).first_or_create!
+	myshiur = Shiur.where(:description => file_name).first_or_create!
+	myshiur.name = title
 	myshiur.magid = mymagid
 	myshiur.category = mycategory
 	myshiur.subcategory = mysubcat
@@ -109,16 +113,15 @@ def process(file_name)
 	begin
 		shiur_date = Date.strptime(date,'%m-%d-%Y')
 		myshiur.shiur_date = shiur_date
-
 	rescue
 		#abort('date is: |'+date+'|')
-		myshiur.shiur_date = date
+		myshiur.shiur_date = "-#{date}-"
 	end
-
-#just for testing
 	myshiur.save!
 	myshiur.reload
-	puts myshiur.inspect
+
+#just for testing
+	#puts myshiur.inspect
 	n+=1
 
 	abort if n>50
@@ -144,8 +147,12 @@ def scan(ftp, dir)
 			fs =  entry.split
 			new_entry = fs[8,fs.length-1].join(' ')
 			full_name = ftp.pwd + "/" + new_entry
-			p = process(full_name) if new_entry != '_RawFiles'
-			p.description = 'xxxxx'#new_entry
+			if new_entry != '_RawFiles'
+				p = process(full_name) 
+				p.description = new_entry
+				p.save!
+				puts p.inspect
+			end
 		end
 	end
 	ftp.chdir('..')
@@ -156,16 +163,3 @@ ftp.passive = true
 ftp.login( $uname, $pw )
 scan(ftp, '/')
 ftp.close
-
-
-#bad_magids = ['Amud, Aumd','Pasuk','Perek','Sif','Siman','Mishnah']
-#is_bad_magid = false;
-#bad_magids.each{|m|
-#	$maggids.each{|m2|
-#		if(!m2.downcase.start_with?(m.downcase)) 
-#			m2 = 'bad magid'
-#		end                 
-#	}
-#}      
-
-                  

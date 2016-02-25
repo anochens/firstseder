@@ -3,13 +3,13 @@
 <table>
   <thead>
     <tr>
-      <th>Magid</th>
+		<th></th>
+      <th><%= sortable "Magid" %></th>
       <th>Category</th>
       <th>Subcat</th>
-      <th>Name</th>
+      <th></th>
       <th>Description</th>
-      <th>Location link</th>
-      <th>Shiur date</th>
+      <th></th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,13 +17,13 @@
   <tbody>
     <% @shiurs.each do |shiur| %>
       <tr>
+        <td><%= shiur.shiur_date %></td>
         <td><%= get_name shiur.magid %></td>
         <td><%= get_name shiur.category %></td>
         <td><%= get_name shiur.subcategory %></td>
         <td><%= shiur.name %></td>
         <td><%= shiur.description %></td>
-        <td><%= shiur.location_link %></td>
-        <td><%= shiur.shiur_date %></td>
+        <td><a href='http://<%= shiur.location_link %>'>Listen</a></td>
         <td><%= link_to 'Edit', edit_shiur_path(shiur) %></td>
         <td><%= link_to 'Delete', shiur, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

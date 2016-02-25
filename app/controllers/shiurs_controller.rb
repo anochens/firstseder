@@ -1,10 +1,11 @@
 class ShiursController < ApplicationController
   before_action :set_shiur, only: [:show, :edit, :update, :destroy]
+  helper_method :sort_column, :sort_direction
 
   # GET /shiurs
   # GET /shiurs.json
   def index
-    @shiurs = Shiur.all
+    @shiurs = Shiur.order(sort_column+ " " + sort_direction)
   end
 
   # GET /shiurs/1
@@ -89,4 +90,16 @@ class ShiursController < ApplicationController
     def shiur_params
       params.require(:shiur).permit(:magid_id, :category_id, :subcat_id, :name, :description, :location_link, :shiur_date)
     end
+
+
+	 private
+
+	 def sort_column
+       Shiur.column_names.include?(params[:sort]) ? params[:sort] : "name"
+	 end
+
+	 def sort_direction
+	    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+	 end
 end
+
