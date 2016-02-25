@@ -46,9 +46,16 @@ def process(file_name)
 
 
 	bad_magids = ['amud','aumd','pasuk','perek','sif','siman','mishnah']
-	magid = nmagid  unless bad_magids.include? nmagid.downcase 
+	is_bad_magid = false
+	bad_magids.each{|m| is_bad_magid= true if nmagid.downcase.start_with? m}
+   is_bad_magid = true if magid.nil?
 
-   magid = 'none' if magid.nil? || !magid
+	magid = nmagid  unless is_bad_magid
+
+	puts nmagid
+	puts is_bad_magid.inspect
+	puts magid
+	#abort
 
 
 #		puts mymagid.inspect
