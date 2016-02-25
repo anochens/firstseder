@@ -111,11 +111,15 @@ def process(file_name)
 	myshiur.location_link = loc_link
 	myshiur.description = '' # gets set to fs late'' # gets set to fs laterr
 	begin
-		shiur_date = Date.strptime(date,'%m-%d-%Y')
+		puts date
+		shiur_date = Date.strptime(date,'%m-%d-%y')
 		myshiur.shiur_date = shiur_date
 	rescue
-		#abort('date is: |'+date+'|')
-		myshiur.shiur_date = "-#{date}-"
+		begin
+			shiur_date = Date.strptime(date,'%y-%m-%d')
+		rescue
+			myshiur.shiur_date = "-#{date}-"
+		end
 	end
 	myshiur.save!
 	myshiur.reload
