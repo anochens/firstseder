@@ -45,7 +45,7 @@ def process(file_name)
 	end
 
 
-	bad_magids = ['amud','aumd','pasuk','perek','sif','siman','mishnah']
+	bad_magids = ['amud','aumd','pasuk','perek','sif','siman','mishn']
 	is_bad_magid = false
 	bad_magids.each{|m| is_bad_magid= true if nmagid.downcase.start_with? m}
    is_bad_magid = true if magid.nil?

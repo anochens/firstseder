@@ -1,16 +1,35 @@
-<h1>Listing shiurs</h1>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
-<table>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+</head>
+
+<h1>Listing shiurs</h1>
+<script>
+$(document).ready(function(){
+
+    $('#test').DataTable({
+	});
+    $('#indext').DataTable({	});
+});
+</script>
+
+<%= link_to 'New Shiur', new_shiur_path %>
+<br />
+<table id='indext' class='display'>
   <thead>
     <tr>
-		<th></th>
+		<th>Date</th>
       <th>Magid</th>
       <th>Category</th>
       <th>Subcat</th>
-      <th></th>
+      <th>Name</th>
       <th>Description</th>
       <th></th>
-      <th colspan="3"></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -33,4 +52,3 @@
 
 <br>
 
-<%= link_to 'New Shiur', new_shiur_path %>
